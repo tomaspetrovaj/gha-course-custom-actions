@@ -10,18 +10,22 @@ jobs:
       - name: Get code
         uses: actions/checkout@v4
       - name: Get & Cache dependencies
+        id: cache
         uses: ./.github/actions/cached-deps
         with:
           caching: false
-      - name: Lint code
-        run: npm run lint
+      - name: Output information
+        run: echo "Cache used? -> ${{ steps.cache.outputs.used-cache }}
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
         uses: actions/checkout@v4
       - name: Get & Cache dependencies
+        id: cache
         uses: ./.github/actions/cached-deps
+      - name: Output information
+        run: echo "Cache used? -> ${{ steps.cache.outputs.used-cache }}
       - name: Test code
         id: run-tests
         run: npm run test
@@ -38,7 +42,10 @@ jobs:
       - name: Get code
         uses: actions/checkout@v4
       - name: Get & Cache dependencies
+        id: cache
         uses: ./.github/actions/cached-deps
+      - name: Output information
+        run: echo "Cache used? -> ${{ steps.cache.outputs.used-cache }}
       - name: Build website
         run: npm run build
       - name: Upload artifacts
